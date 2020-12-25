@@ -1,0 +1,15 @@
+[server]
+192.168.43.238 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+
+[clients]
+192.168.43.110 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+192.168.43.69 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+192.168.43.154 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+
+
+[haproxyserver]
+192.168.43.238 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+
+[backendservers]
+192.168.43.154 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh
+192.168.43.110 ansible_user=root ansible_ssh_pass=redhat ansible_connection=ssh

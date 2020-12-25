@@ -1,0 +1,54 @@
+- hosts: backendservers
+  vars:
+        x:
+           - "httpd"
+           - "php"
+
+  tasks:
+     - package:
+             name: "{{ item }}"
+             state: present
+       loop: "{{ x }}"
+
+     - copy:
+         src: /wshaproxyrole/ifconfig.php
+         dest: /var/www/html/ifconfig.php
+
+     - service:
+        name: "{{ x[0] }}"
+        state: started
+
+     - selinux:
+        policy: targeted
+        state: permissive
+
+     - firewalld:
+         port: 80/tcp
+         state: enabled        
+
+
+
+- hosts: haproxyserver
+  tasks:
+   - package:
+       name: haproxy
+       state: present
+
+   - template:
+       src: /wshaproxyrole/haproxy.cfg
+       dest: /etc/haproxy/haproxy.cfg
+
+   - selinux:
+        policy: targeted
+        state: permissive
+
+   - service:
+        name: haproxy
+        state: restarted
+
+   - firewalld:
+        port: 789/tcp
+        state: enabled
+
+
+    
